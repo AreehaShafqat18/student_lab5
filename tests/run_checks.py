@@ -49,6 +49,20 @@ def run_step_2():
         )
 
 
+def run_step_3():
+    from src.dataset import make_students
+
+    df = make_students()
+
+    check("3.1 Count missing", practice.t3_1_count_missing, df)
+    check("3.2 Convert math", practice.t3_2_math_numeric, df)
+    check("3.3 Remove duplicates", practice.t3_3_remove_duplicates, df)
+    check("3.4 Fill English median", practice.t3_4_fill_english_median, df)
+    check("3.5 Rows after dropna", practice.t3_5_rows_after_dropna, df)
+    check("3.6 Section category", practice.t3_6_section_category, df)
+    check("3.7 Clean students", practice.t3_7_clean_students, df)
+
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: python -m tests.run_checks 2")
@@ -57,9 +71,11 @@ def main():
     step = sys.argv[1]
 
     if step == "2":
-        run_step_2()
+     run_step_2()
+    elif step == "3":
+     run_step_3()
     else:
-        print(f"Step {step} is not implemented in this checker.")
+     print(f"Step {step} is not implemented in this checker.")
 
 
 if __name__ == "__main__":
