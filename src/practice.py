@@ -361,3 +361,26 @@ def t1_4_series_vs_frame(df):
         type(df["temp_c"]).__name__,
         type(df[["temp_c"]]).__name__
     )
+    
+def t2_1_csv_roundtrip(df, path):
+    """Save to CSV and read it back; return the shape."""
+    df.to_csv(path, index=False)
+    return pd.read_csv(path).shape
+
+
+def t2_2_json_columns(df, path):
+    """Save as JSON records and return the columns after reading."""
+    df.to_json(path, orient="records")
+    return list(pd.read_json(path).columns)
+
+
+def t2_3_excel_roundtrip(df, path):
+    """Save to Excel and read it back; return the shape."""
+    df.to_excel(path, index=False)
+    return pd.read_excel(path).shape
+
+
+def t2_4_index_trap(df, path):
+    """Save without specifying index=False and return the read-back columns."""
+    df.to_csv(path)
+    return list(pd.read_csv(path).columns)
