@@ -424,3 +424,62 @@ def t4_7_sort_two_keys(df):
         ["category", "price"],
         ascending=[True, False]
     )
+    
+    
+# STEP 5: Grouping, Merging and Applying Functions
+
+def t5_1_stock_by_category(df):
+    """Calculate total stock for each category."""
+    return df.groupby("category")["stock"].sum()
+
+
+def t5_2_avg_price_by_category(df):
+    """Calculate average price by category, rounded to 2 decimals."""
+    return df.groupby("category")["price"].mean().round(2)
+
+
+def t5_3_category_summary(df):
+    """Return category-wise product count, average price and total stock."""
+    return df.groupby("category").agg(
+        product_count=("product", "count"),
+        avg_price=("price", "mean"),
+        total_stock=("stock", "sum")
+    )
+
+
+def t5_4_left_merge_names(products, orders):
+    """Left merge orders with products, keeping every order."""
+    return orders.merge(products, on="product_id", how="left")
+
+
+def t5_5_inner_merge_rows(products, orders):
+    """Inner merge orders with products, keeping matching orders only."""
+    return orders.merge(products, on="product_id", how="inner")
+
+
+def t5_6_revenue_list(products, orders):
+    """Merge orders and products, then calculate revenue for each order."""
+    result = orders.merge(products, on="product_id", how="left")
+    result["revenue"] = result["price"] * result["qty"]
+    return result
+
+
+def t5_7_revenue_by_customer(products, orders):
+    """Calculate total revenue for each customer."""
+    result = orders.merge(products, on="product_id", how="inner")
+    result["revenue"] = result["price"] * result["qty"]
+    return result.groupby("customer")["revenue"].sum()
+
+
+def t5_8_price_label(df):
+    """Apply a function to label products as expensive or affordable."""
+    def label(price):
+        return "Expensive" if price >= 100 else "Affordable"
+
+    return df["price"].apply(label)
+
+
+def t5_9_upper_names(df):
+    """Convert all product names to uppercase using a vectorised method."""
+    return df["product"].str.upper()
+

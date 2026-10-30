@@ -91,8 +91,28 @@ def main():
         run_step_3()
     elif step == "4":
         run_step_4()
+    elif step == "5":
+        run_step_5()
     else:
         print(f"Step {step} is not implemented in this checker.")
+        
+        
+def run_step_5():
+    from src.dataset import make_products, make_orders
+
+    products = make_products()
+    orders = make_orders()
+
+    check("5.1 Stock by category", practice.t5_1_stock_by_category, products)
+    check("5.2 Average price", practice.t5_2_avg_price_by_category, products)
+    check("5.3 Category summary", practice.t5_3_category_summary, products)
+    check("5.4 Left merge", practice.t5_4_left_merge_names, products, orders)
+    check("5.5 Inner merge", practice.t5_5_inner_merge_rows, products, orders)
+    check("5.6 Revenue list", practice.t5_6_revenue_list, products, orders)
+    check("5.7 Revenue by customer", practice.t5_7_revenue_by_customer, products, orders)
+    check("5.8 Price label", practice.t5_8_price_label, products)
+    check("5.9 Uppercase names", practice.t5_9_upper_names, products)
+
 
 
 if __name__ == "__main__":
