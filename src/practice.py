@@ -483,3 +483,49 @@ def t5_9_upper_names(df):
     """Convert all product names to uppercase using a vectorised method."""
     return df["product"].str.upper()
 
+
+# STEP 6: Basic Feature Preparation
+
+def t6_1_price_zscore(df):
+    """Standardise product prices using z-score."""
+    return (df["price"] - df["price"].mean()) / df["price"].std()
+
+
+def t6_2_dummy_columns(df):
+    """Create one-hot encoded columns for product categories."""
+    return pd.get_dummies(df["category"], prefix="category", dtype=int)
+
+
+def t6_3_feature_matrix(df):
+    """Scale prices, encode categories and drop identifier columns."""
+    result = df.copy()
+
+    result["price_z"] = (
+        result["price"] - result["price"].mean()
+    ) / result["price"].std()
+
+    result = pd.get_dummies(
+        result,
+        columns=["category"],
+        prefix="category",
+        dtype=int
+    )
+
+    return result.drop(columns=["product_id", "product", "price"])
+
+
+def t6_4_minmax_stock(df):
+    """Scale stock values between 0 and 1."""
+    return (
+        (df["stock"] - df["stock"].min())
+        / (df["stock"].max() - df["stock"].min())
+    )
+
+
+def t6_5_train_test_sizes(df):
+    """Split rows by position: first 80% for training, rest for testing."""
+    split = int(len(df) * 0.8)
+    train = df.iloc[:split]
+    test = df.iloc[split:]
+
+    return len(train), len(test)

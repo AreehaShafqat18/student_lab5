@@ -75,7 +75,40 @@ def run_step_4():
     check("4.5 iloc block", practice.t4_5_iloc_block, products)
     check("4.6 Low stock or premium", practice.t4_6_low_stock_or_premium, products)
     check("4.7 Sort by two keys", practice.t4_7_sort_two_keys, products)
+def run_step_5():
+    from src.dataset import make_products, make_orders
 
+    products = make_products()
+    orders = make_orders()
+
+    check("5.1 Stock by category", practice.t5_1_stock_by_category, products)
+    check("5.2 Average price", practice.t5_2_avg_price_by_category, products)
+    check("5.3 Category summary", practice.t5_3_category_summary, products)
+    check("5.4 Left merge", practice.t5_4_left_merge_names, products, orders)
+    check("5.5 Inner merge", practice.t5_5_inner_merge_rows, products, orders)
+    check("5.6 Revenue list", practice.t5_6_revenue_list, products, orders)
+    check("5.7 Revenue by customer", practice.t5_7_revenue_by_customer, products, orders)
+    check("5.8 Price label", practice.t5_8_price_label, products)
+    check("5.9 Uppercase names", practice.t5_9_upper_names, products)
+
+
+def run_step_6():
+    from src.dataset import make_products
+    from src.practice import (
+        t6_1_price_zscore,
+        t6_2_dummy_columns,
+        t6_3_feature_matrix,
+        t6_4_minmax_stock,
+        t6_5_train_test_sizes
+    )
+
+    df = make_products()
+
+    check("6.1 Price z-score", lambda: t6_1_price_zscore(df))
+    check("6.2 Dummy columns", lambda: t6_2_dummy_columns(df))
+    check("6.3 Feature matrix", lambda: t6_3_feature_matrix(df))
+    check("6.4 Min-max stock", lambda: t6_4_minmax_stock(df))
+    check("6.5 Train/test sizes", lambda: t6_5_train_test_sizes(df))
 
 
 def main():
@@ -93,26 +126,11 @@ def main():
         run_step_4()
     elif step == "5":
         run_step_5()
+    elif step == "6":
+        run_step_6()
     else:
+        run_step_3()
         print(f"Step {step} is not implemented in this checker.")
-        
-        
-def run_step_5():
-    from src.dataset import make_products, make_orders
-
-    products = make_products()
-    orders = make_orders()
-
-    check("5.1 Stock by category", practice.t5_1_stock_by_category, products)
-    check("5.2 Average price", practice.t5_2_avg_price_by_category, products)
-    check("5.3 Category summary", practice.t5_3_category_summary, products)
-    check("5.4 Left merge", practice.t5_4_left_merge_names, products, orders)
-    check("5.5 Inner merge", practice.t5_5_inner_merge_rows, products, orders)
-    check("5.6 Revenue list", practice.t5_6_revenue_list, products, orders)
-    check("5.7 Revenue by customer", practice.t5_7_revenue_by_customer, products, orders)
-    check("5.8 Price label", practice.t5_8_price_label, products)
-    check("5.9 Uppercase names", practice.t5_9_upper_names, products)
-
 
 
 if __name__ == "__main__":
