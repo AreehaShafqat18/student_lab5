@@ -384,3 +384,43 @@ def t2_4_index_trap(df, path):
     """Save without specifying index=False and return the read-back columns."""
     df.to_csv(path)
     return list(pd.read_csv(path).columns)
+
+
+# STEP 4: Selecting, Filtering and Sorting
+
+def t4_1_cheap_products(df):
+    """Return products with price below 50."""
+    return df[df["price"] < 50]
+
+
+def t4_2_accessories_in_stock(df):
+    """Return accessories that have stock greater than zero."""
+    return df[(df["category"] == "Accessories") & (df["stock"] > 0)]
+
+
+def t4_3_top_two_by_price(df):
+    """Return the two most expensive products."""
+    return df.sort_values("price", ascending=False).head(2)
+
+
+def t4_4_loc_price(df):
+    """Return the price of the product at index label 2."""
+    return df.loc[2, "price"]
+
+
+def t4_5_iloc_block(df):
+    """Return the first two rows and first three columns."""
+    return df.iloc[0:2, 0:3]
+
+
+def t4_6_low_stock_or_premium(df):
+    """Return products with stock below 10 OR price above 200."""
+    return df[(df["stock"] < 10) | (df["price"] > 200)]
+
+
+def t4_7_sort_two_keys(df):
+    """Sort by category ascending and price descending."""
+    return df.sort_values(
+        ["category", "price"],
+        ascending=[True, False]
+    )

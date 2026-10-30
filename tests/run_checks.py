@@ -61,6 +61,21 @@ def run_step_3():
     check("3.5 Rows after dropna", practice.t3_5_rows_after_dropna, df)
     check("3.6 Section category", practice.t3_6_section_category, df)
     check("3.7 Clean students", practice.t3_7_clean_students, df)
+    
+    
+def run_step_4():
+    from src.dataset import make_products
+
+    products = make_products()
+
+    check("4.1 Cheap products", practice.t4_1_cheap_products, products)
+    check("4.2 Accessories in stock", practice.t4_2_accessories_in_stock, products)
+    check("4.3 Top two by price", practice.t4_3_top_two_by_price, products)
+    check("4.4 loc price", practice.t4_4_loc_price, products)
+    check("4.5 iloc block", practice.t4_5_iloc_block, products)
+    check("4.6 Low stock or premium", practice.t4_6_low_stock_or_premium, products)
+    check("4.7 Sort by two keys", practice.t4_7_sort_two_keys, products)
+
 
 
 def main():
@@ -71,11 +86,13 @@ def main():
     step = sys.argv[1]
 
     if step == "2":
-     run_step_2()
+        run_step_2()
     elif step == "3":
-     run_step_3()
+        run_step_3()
+    elif step == "4":
+        run_step_4()
     else:
-     print(f"Step {step} is not implemented in this checker.")
+        print(f"Step {step} is not implemented in this checker.")
 
 
 if __name__ == "__main__":
