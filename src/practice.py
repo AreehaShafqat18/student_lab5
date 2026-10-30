@@ -529,3 +529,53 @@ def t6_5_train_test_sizes(df):
     test = df.iloc[split:]
 
     return len(train), len(test)
+
+# Step 7: Capstone Tasks
+
+def t7_1_top_customer(orders, products):
+    merged = orders.merge(products, on="product_id", how="inner")
+
+    merged["revenue"] = merged["price"] * merged["qty"]
+
+    customer_revenue = merged.groupby("customer")["revenue"].sum()
+
+    return customer_revenue.idxmax()
+
+
+def t7_2_best_selling_product(orders, products):
+    merged = orders.merge(products, on="product_id", how="inner")
+
+    product_quantity = merged.groupby("product")["qty"].sum()
+
+    return product_quantity.idxmax()
+
+
+def t7_3_customer_ranking(orders, products):
+    merged = orders.merge(products, on="product_id", how="inner")
+
+    merged["revenue"] = merged["price"] * merged["qty"]
+
+    ranking = (
+        merged.groupby("customer", as_index=False)["revenue"]
+        .sum()
+        .sort_values("revenue", ascending=False)
+        .reset_index(drop=True)
+    )
+
+    return ranking
+
+
+def t7_4_unmatched_orders(orders, products):
+    unmatched = orders[
+        ~orders["product_id"].isin(products["product_id"])
+    ]
+
+    return unmatched
+
+
+def t7_5_save_report(orders, products, path):
+    report = t7_3_customer_ranking(orders, products)
+
+    report.to_csv(path, index=False)
+
+    return report

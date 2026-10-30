@@ -109,29 +109,48 @@ def run_step_6():
     check("6.3 Feature matrix", lambda: t6_3_feature_matrix(df))
     check("6.4 Min-max stock", lambda: t6_4_minmax_stock(df))
     check("6.5 Train/test sizes", lambda: t6_5_train_test_sizes(df))
+    
+def run_step_7():
+    from src.dataset import make_orders, make_products
+    from src.practice import (
+        t7_1_top_customer,
+        t7_2_best_selling_product,
+        t7_3_customer_ranking,
+        t7_4_unmatched_orders,
+        t7_5_save_report
+    )
+
+    orders = make_orders()
+    products = make_products()
+
+    check("7.1 Top customer", lambda: t7_1_top_customer(orders, products))
+    check("7.2 Best-selling product", lambda: t7_2_best_selling_product(orders, products))
+    check("7.3 Customer ranking", lambda: t7_3_customer_ranking(orders, products))
+    check("7.4 Unmatched orders", lambda: t7_4_unmatched_orders(orders, products))
+    check("7.5 Save report", lambda: t7_5_save_report(orders, products, "results/report.csv"))
+
 
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python -m tests.run_checks 2")
-        return
-
-    step = sys.argv[1]
-
-    if step == "2":
-        run_step_2()
-    elif step == "3":
-        run_step_3()
-    elif step == "4":
-        run_step_4()
-    elif step == "5":
-        run_step_5()
-    elif step == "6":
-        run_step_6()
+        steps = ["2", "3", "4", "5", "6", "7"]
     else:
-        run_step_3()
-        print(f"Step {step} is not implemented in this checker.")
+        steps = [sys.argv[1]]
 
-
+    for step in steps:
+        if step == "2":
+            run_step_2()
+        elif step == "3":
+            run_step_3()
+        elif step == "4":
+            run_step_4()
+        elif step == "5":
+            run_step_5()
+        elif step == "6":
+            run_step_6()
+        elif step == "7":
+            run_step_7()
+        else:
+            print(f"Step {step} is not implemeted.")
 if __name__ == "__main__":
     main()
